@@ -340,7 +340,7 @@ if page == "🏠 소개":
             <span class="info-icon">📧</span>
             <div>
                 <div class="info-label">이메일</div>
-                <div class="info-value">songjw_77@kdn.com</div>
+                <div class="info-value">s*****_**@kdn.com</div>
             </div>
         </div>
         <div class="info-item">
