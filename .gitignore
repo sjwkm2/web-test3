@@ -1,0 +1,7 @@
+screenshots/
+streamlit.log
+streamlit_err.log
+take_screenshots.py
+__pycache__/
+*.pyc
+.streamlit/
