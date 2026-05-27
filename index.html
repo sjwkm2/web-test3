@@ -59,14 +59,23 @@
     // stlite가 준비되면 로딩 화면 제거
     const loading = document.getElementById("loading");
     const observer = new MutationObserver(() => {
-      const iframe = document.querySelector("#root iframe");
-      if (iframe) {
-        setTimeout(() => loading.classList.add("fade-out"), 800);
-        setTimeout(() => loading.remove(), 1300);
+      // stlite는 iframe이 아닌 div를 #root에 직접 렌더링함
+      const content = document.querySelector("#root > div");
+      if (content) {
+        setTimeout(() => loading.classList.add("fade-out"), 2000);
+        setTimeout(() => loading.remove(), 2500);
         observer.disconnect();
       }
     });
-    observer.observe(document.getElementById("root"), { childList: true, subtree: true });
+    observer.observe(document.getElementById("root"), { childList: true });
+
+    // 안전망: 20초 후 강제 제거
+    setTimeout(() => {
+      if (document.getElementById("loading")) {
+        loading.classList.add("fade-out");
+        setTimeout(() => loading.remove(), 500);
+      }
+    }, 20000);
   </script>
 </body>
 </html>
