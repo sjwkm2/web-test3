@@ -66,19 +66,19 @@
       document.getElementById("root")
     );
 
-    // stlite가 준비되면 로딩 화면 제거
+    // Streamlit 앱이 실제로 렌더링됐을 때만 로딩 화면 제거
+    // (#root > div 는 "Loading Pyodide." 단계에서도 생기므로 stApp까지 기다림)
     const loading = document.getElementById("loading");
     const observer = new MutationObserver(() => {
-      // stlite는 iframe이 아닌 div를 #root에 직접 렌더링함
-      const content = document.querySelector("#root > div");
-      if (content) {
+      const app = document.querySelector('[data-testid="stApp"]');
+      if (app) {
         clearInterval(msgTimer);
-        setTimeout(() => loading.classList.add("fade-out"), 2000);
-        setTimeout(() => loading.remove(), 2500);
+        setTimeout(() => loading.classList.add("fade-out"), 300);
+        setTimeout(() => loading.remove(), 800);
         observer.disconnect();
       }
     });
-    observer.observe(document.getElementById("root"), { childList: true });
+    observer.observe(document.getElementById("root"), { childList: true, subtree: true });
 
     // 안전망: 20초 후 강제 제거
     setTimeout(() => {
