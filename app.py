@@ -280,6 +280,7 @@ html, body, [class*="css"] {
 /* Streamlit 기본 요소 숨기기 */
 #MainMenu, footer, header { visibility: hidden; }
 .stDeployButton { display: none; }
+[data-testid="stStatusWidget"] { display: none !important; }
 </style>
 """
 
