@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 
 # ── 페이지 설정 ──────────────────────────────────────────────
 st.set_page_config(
@@ -567,18 +566,25 @@ elif page == "📋 게시판":
     # 게시글 목록
     st.markdown(f"**총 {len(st.session_state.posts)}건**")
 
-    df = pd.DataFrame(st.session_state.posts)
-    df = df.rename(columns={"no": "번호", "title": "제목", "date": "작성일", "views": "조회"})
-    st.dataframe(
-        df[["번호", "제목", "작성일", "조회"]],
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "번호":  st.column_config.NumberColumn(width="small"),
-            "제목":  st.column_config.TextColumn(width="large"),
-            "작성일": st.column_config.TextColumn(width="medium"),
-            "조회":  st.column_config.NumberColumn(width="small"),
-        },
+    rows_html = "".join(
+        f'<tr>'
+        f'<td style="width:50px;padding:12px 14px;border-bottom:1px solid #F0F2F8;color:#1B2A4A;font-size:0.85rem">{p["no"]}</td>'
+        f'<td style="padding:12px 14px;border-bottom:1px solid #F0F2F8;color:#1B2A4A;font-size:0.88rem;font-weight:500">{p["title"]}</td>'
+        f'<td style="width:110px;padding:12px 14px;border-bottom:1px solid #F0F2F8;color:#4A5A7C;font-size:0.8rem">{p["date"]}</td>'
+        f'<td style="width:70px;padding:12px 14px;border-bottom:1px solid #F0F2F8;color:#4A5A7C;font-size:0.8rem">{p["views"]}</td>'
+        f'</tr>'
+        for p in st.session_state.posts
     )
+    st.markdown(f"""
+    <table class="board-table" style="width:100%;border-collapse:collapse;background:#fff;border:1px solid #DDE2EE;border-radius:12px;overflow:hidden">
+        <thead><tr>
+            <th style="width:50px">번호</th>
+            <th>제목</th>
+            <th style="width:110px">작성일</th>
+            <th style="width:70px">조회</th>
+        </tr></thead>
+        <tbody>{rows_html}</tbody>
+    </table>
+    """, unsafe_allow_html=True)
 
     st.markdown('<div class="footer-text">⚡ 한전KDN · 풀스택 바이브코딩 실습 프로젝트</div>', unsafe_allow_html=True)
